@@ -30,6 +30,8 @@ module RuboCop
           (send $(send _ {:exactly :at_least :at_most} (int {1 2})) :times)
         PATTERN
 
+        def_node_search :stub?, '(send nil? :receive ...)'
+
         def on_send(node)
           receive_counts(node) do |offending_node|
             offending_range = range(node, offending_node)
@@ -43,15 +45,16 @@ module RuboCop
         end
 
         def autocorrect(node)
+          return unless stub?(node)
+
           lambda do |corrector|
             replacement = matcher_for(
               node.method_name,
               node.first_argument.source.to_i
             )
-            corrector.replace(
-              range(node.parent, node),
-              replacement
-            )
+
+            original = range(node.parent, node)
+            corrector.replace(original, replacement)
           end
         end
 

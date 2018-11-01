@@ -3,6 +3,7 @@
 ## Master (Unreleased)
 
 * Add `IgnoreSharedExamples` option for `RSpec/NamedSubject`. ([@RST-J][])
+* Don't try to auto-correct `RSpec/ReceiveCounts` when method name `exactly`, `at_least` or `at_most` is used along with `times`, without being an RSpec API. ([@Darhazer][])
 
 ## 1.30.1 (2018-11-01)
 
