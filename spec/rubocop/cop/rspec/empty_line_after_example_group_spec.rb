@@ -77,6 +77,17 @@ RSpec.describe RuboCop::Cop::RSpec::EmptyLineAfterExampleGroup do
     RUBY
   end
 
+  it 'handles empty example blocks' do
+    expect_no_offenses(<<-RUBY)
+      describe do
+        context do
+          it do
+          end
+        end
+      end
+    RUBY
+  end
+
   bad_example = <<-RUBY
     RSpec.describe Foo do
       describe '#bar' do
